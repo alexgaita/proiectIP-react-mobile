@@ -1,0 +1,37 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/BebasNeue-Regular.ttf",
+      "sha1": "ac208c2416e2ad9f6324697b98b8fc7ccb338f9e"
+    },
+    {
+      "path": "assets/fonts/Nunito-Bold.ttf",
+      "sha1": "ff09271108352b2c57132ea84b65707b850ec076"
+    },
+    {
+      "path": "assets/fonts/Nunito-BoldItalic.ttf",
+      "sha1": "232f61adc420587b289813fb987fd590e8593a26"
+    },
+    {
+      "path": "assets/fonts/Nunito-Italic.ttf",
+      "sha1": "864a743bd5537f1fcddf9f7cd87ccaa16476963f"
+    },
+    {
+      "path": "assets/fonts/Nunito-Medium.ttf",
+      "sha1": "c4baa36b457d60ff2006a7a529d00f3a2bf8edb0"
+    },
+    {
+      "path": "assets/fonts/Nunito-MediumItalic.ttf",
+      "sha1": "245a582bf2d8c74f86c52377226e077856952fae"
+    },
+    {
+      "path": "assets/fonts/Nunito-Regular.ttf",
+      "sha1": "7f3ad3ffc0534a5ca001ebabff474fe5404e2bb8"
+    },
+    {
+      "path": "assets/fonts/Nunito-SemiBold.ttf",
+      "sha1": "18557d94fd2bf9c718e297f0677ff04d5e20645d"
+    }
+  ]
+}
