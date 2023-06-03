@@ -4,9 +4,16 @@ import Icon from 'react-native-vector-icons/Feather';
 import colors from '../assets/colors/colors';
 import { Calendar } from 'react-native-calendars';
 import { FlatList } from 'react-native';
-import { db } from '../firebase/firebase';
+import { db } from '../App';
 import { collection, getDocs } from 'firebase/firestore';
+import dayjs from 'dayjs';
 
+var groupBy = function(xs, key) {
+  return xs.reduce(function(rv, x) {
+    (rv[x[key]] = rv[x[key]] || []).push(x);
+    return rv;
+  }, {});
+};
 
 const activitiesData = {
   '2023-05-11': [
@@ -18,6 +25,7 @@ const activitiesData = {
 
 const CalendarScreen = ({ navigation }) => {
   const [selectedDate, setSelectedDate] = useState(null);
+  const [activities, setActivities] = useState({});
 
   const handleDayPress = (day) => {
     setSelectedDate(day.dateString);
@@ -27,11 +35,21 @@ const CalendarScreen = ({ navigation }) => {
     //console.log('Month changed', month);
   };
 
+  
+
   const fetchData = async () => {
     const queryResponse = await getDocs(collection(db,'activities'))
+  
+    let activityList = {};
     queryResponse.forEach((doc)=>{
-      console.log(doc)
+      const date = dayjs.unix(doc.data().startTime.seconds);
+      activityList[date.format("YYYY-MM-DD")] = (activityList[date.format("YYYY-MM-DD")] || []).concat({...doc.data(), startTime:date.format("HH:mm")} )
+      // console.log(dayjs.unix(doc.data().startTime.seconds).format("YYYY-MM-DD"))
+      // console.log(doc.data().startTime.toDate().toDateString())
+      // console.log(doc.data().startTime.toDate().toLocaleTimeString())
     })
+    setActivities(activityList);
+    //console.log(activityList['2023-05-18'])
   }
 
   useEffect(()=>{
@@ -40,20 +58,21 @@ const CalendarScreen = ({ navigation }) => {
 
   const renderActivity = ({ item }) => (
     <View style={styles.activityItem}>
-      <Text style={styles.activityTime}>{item.time}</Text>
-      <Text style={styles.activityName}>{item.activity}</Text>
+      <Text style={styles.activityTime}>{item.startTime}</Text>
+      <Text style={styles.activityName}>{item.name}</Text>
       <Text style={styles.activityDuration}>{item.duration}</Text>
+      <Text style={styles.activityDuration}>{item.description}</Text>
     </View>
   );
 
   const renderActivitiesForSelectedDate = () => {
-    if (!selectedDate || !activitiesData[selectedDate]) {
+    if (!selectedDate || !activities[selectedDate]) {
       return null;
     }
 
     return (
       <FlatList
-        data={activitiesData[selectedDate]}
+        data={activities[selectedDate]}
         renderItem={renderActivity}
         keyExtractor={(item, index) => index.toString()}
       />

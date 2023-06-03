@@ -1,8 +1,9 @@
 import React from "react"
 import colors from '../assets/colors/colors'; 
-import {View, Text, ImageBackground, StyleSheet, TouchableOpacity} from 'react-native'
-import{DrawerContentScrollView, DrawerItemList} from '@react-navigation/drawer'
-import { auth, signOut } from "../firebase/firebase";
+import { View, Text, ImageBackground, StyleSheet, TouchableOpacity} from 'react-native'
+import{ DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer'
+import { auth, signOut } from '../App';
+
 
 const CustomDrawer = (props,{navigation}) =>{
     const handleSignOut =() =>{

@@ -1,32 +1,26 @@
 import React, {useState} from 'react';
 import colors from '../assets/colors/colors';
-import {TextInput, ImageBackground, Text, StyleSheet, Button, View, Image, TouchableOpacity} from 'react-native';
-import { auth, signInWithEmailAndPassword } from "../firebase/firebase";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { CommonActions } from '@react-navigation/native';
-//const auth = getAuth();
+import {Alert, TextInput, ImageBackground, Text, StyleSheet, Button, View, Image, TouchableOpacity} from 'react-native';
+//import { signInWithEmailAndPassword } from 'firebase/auth'
+import { auth, signInWithEmailAndPassword } from '../App';
 
 const SignIn =  ({navigation}) =>{
   const[email, setEmail] = useState('');
   const[passwd, setPasswd] = useState('');
-  const[error, setError] = useState('');
 
-  const handleSignIn = async() => {
-    console.log("intra aici")
+  const handleSignIn =  () => {
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, passwd);
-      const user = userCredential.user;
-      // console.log(user)
-      
-      console.log('User logged in.');
+      console.log('Before login...');
+      signInWithEmailAndPassword(auth, email, passwd)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log('User signed in:', user);
+      })
     } catch (error) {
-      console.error(error)
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode, errorMessage);
-      setError(errorMessage);
+      console.log('Sign-in error:', error);
+      Alert.alert('Error', 'Failed to sign in. Please check your credentials.');
     }
-  }
+  };
  
     return(
         <View style={styles.mainView}>
